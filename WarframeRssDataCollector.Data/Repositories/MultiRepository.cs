@@ -7,6 +7,7 @@ using WarframeRssDataCollector.Data.DI.Interface;
 using WarframeRssDataCollector.Data.Functional;
 using WarframeRssDataCollector.Data.Repositories.Interface;
 using WarframeRssDataCollector.Domain;
+using WarframeRssDataCollector.Domain.Functional;
 using WarframeRssDataCollector.Domain.Store.Warframe;
 
 namespace WarframeRssDataCollector.Data.Repositories
@@ -41,10 +42,13 @@ namespace WarframeRssDataCollector.Data.Repositories
 
         private StringBuilder appendToString(WarframeItem wi)
         {
-            if (msgContent.ToString().Length > 0)
-                msgContent.Append("\n\n" + wi.Author.ToUpper() + " - " + wi.Title);
-            else
-                msgContent.Append(wi.Author.ToUpper() + " - " + wi.Title);
+            if(WantedList.Check(wi.Title))
+            {
+                if (msgContent.ToString().Length > 0)
+                    msgContent.Append("\n\n" + wi.Author.ToUpper() + " - " + wi.Title);
+                else
+                    msgContent.Append(wi.Author.ToUpper() + " - " + wi.Title);
+            }
 
             return msgContent;
         }

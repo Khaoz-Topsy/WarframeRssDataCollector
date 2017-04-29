@@ -42,8 +42,10 @@
   <ItemGroup>
     <Compile Include="DI\ConnectionString.cs" />
     <Compile Include="DI\Interface\IConnectionString.cs" />
+    <Compile Include="Enums\WantedListEnum.cs" />
     <Compile Include="Functional\LocationCheck.cs" />
     <Compile Include="Functional\SecretData.cs" />
+    <Compile Include="Functional\WantedList.cs" />
     <Compile Include="Store\GeneratedRSS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Store\PushJetData.cs" />
