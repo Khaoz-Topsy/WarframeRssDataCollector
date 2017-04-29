@@ -12,26 +12,26 @@ namespace WarframeRssDataCollector.Data.Repositories
     {
         public void deleteFiles()
         {
-            var k = 1;
+
         }
         public void flush()
         {
-            var k = 1;
+
         }
 
         public void saveAlerts(List<WarframeAlertItem> Alerts)
         {
-            var k = 1;
+
         }
 
         public void saveInvasions(List<WarframeNonAlertItem> Invasions)
         {
-            var k = 1;
+
         }
 
         public void saveOutbreaks(List<WarframeNonAlertItem> Outbreaks)
         {
-            var k = 1;
+
         }
     }
 }

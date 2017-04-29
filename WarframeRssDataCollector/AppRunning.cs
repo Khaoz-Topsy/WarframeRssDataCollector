@@ -37,18 +37,18 @@ namespace WarframeRssDataCollector
             Old = Current;
             Current = rssData.getData();
 
-            //if ((Old.Count > 0) && (Current.Count > 0))
-            //{
-            //    commitDifferences(rssData.compare(Current, Old));
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Warframe Data Collector Initialized");
-            //}
+            if ((Old.Count > 0) && (Current.Count > 0))
+            {
+                commitDifferences(rssData.compare(Current, Old));
+            }
+            else
+            {
+                Console.WriteLine("Warframe Data Collector Initialized");
+            }
 
-            Console.WriteLine("Warframe Data Collector ready for DEV Initialization");
-            var test = Console.ReadLine();
-            commitDifferences(rssData.compare(Current, Old));
+            //Console.WriteLine("Warframe Data Collector ready for DEV Initialization");
+            //var test = Console.ReadLine();
+            //commitDifferences(rssData.compare(Current, Old));
         }
 
         private void commitDifferences(List<WarframeItem> Difference)
