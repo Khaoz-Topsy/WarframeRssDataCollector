@@ -14,6 +14,10 @@ namespace WarframeRssDataCollector.Data.Repositories
         {
             var k = 1;
         }
+        public void flush()
+        {
+            var k = 1;
+        }
 
         public void saveAlerts(List<WarframeAlertItem> Alerts)
         {

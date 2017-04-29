@@ -12,14 +12,14 @@ namespace WarframeRssDataCollector.Data.DI
     {
         public string getString()
         {
-            return SecretData.DevConnctionString;
+            return SecretData.RelConnctionString;
         }
     }
     public class ConnectionStrings : IConnectionString
     {
         public string getString()
         {
-            return SecretData.RelConnctionString;
+            return SecretData.DevConnctionString; 
         }
     }
 }

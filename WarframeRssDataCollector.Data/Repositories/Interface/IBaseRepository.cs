@@ -14,5 +14,6 @@ namespace WarframeRssDataCollector.Data.Repositories.Interface
         void saveOutbreaks(List<WarframeNonAlertItem> Outbreaks);
 
         void deleteFiles();
+        void flush();
     }
 }

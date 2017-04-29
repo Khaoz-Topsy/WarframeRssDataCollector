@@ -70,6 +70,8 @@ namespace WarframeRssDataCollector
             storeRepo.saveAlerts(Alerts);
             storeRepo.saveInvasions(Invasions);
             storeRepo.saveOutbreaks(Outbreaks);
+
+            storeRepo.flush();
         }
 
     }

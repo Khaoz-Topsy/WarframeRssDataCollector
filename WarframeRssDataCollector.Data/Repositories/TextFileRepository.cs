@@ -59,5 +59,6 @@ namespace WarframeRssDataCollector.Data.Repositories.Interface
             if (File.Exists(outbreakFile))
                 File.Delete(outbreakFile);
         }
+        public void flush() { }
     }
 }

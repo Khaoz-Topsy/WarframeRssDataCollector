@@ -17,8 +17,9 @@ namespace WarframeRssDataCollector
         public override void Load()
         {
             //Bind<IBaseRepository>().To<TextFileRepository>();
-            Bind<IBaseRepository>().To<DatabaseRepository>();
+            //Bind<IBaseRepository>().To<DatabaseRepository>();
             //Bind<IBaseRepository>().To<MockRepository>();
+            Bind<IBaseRepository>().To<MultiRepository>();
 
             if (isRemote)
             {

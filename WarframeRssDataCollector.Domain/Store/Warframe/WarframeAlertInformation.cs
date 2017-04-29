@@ -27,7 +27,7 @@ namespace WarframeRssDataCollector.Domain.Store.Warframe
                 int count = 0;
                 string[] ST = Line.Split(' ');
                 String Current = ST[count];
-                String Old = null;
+                String Old = "";
                 bool EOL = false;
                 do
                 {
@@ -107,6 +107,10 @@ namespace WarframeRssDataCollector.Domain.Store.Warframe
                     if (count < (ST.Length-1))
                     {
                         count++;
+
+                        if (Old.ToLower().Equals("(kuva"))
+                            Location += " " + Current;
+
                         Old = Current;
                         Current = ST[count];
                     }

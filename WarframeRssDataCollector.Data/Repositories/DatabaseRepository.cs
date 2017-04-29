@@ -62,7 +62,7 @@ namespace WarframeRssDataCollector.Data.Repositories
                                 await command.ExecuteNonQueryAsync();
 
                                 passed = true;
-                                Console.WriteLine("DB Entry made: " + alert.Title);
+                                Console.WriteLine("DB Entry made: " + alert.Title + " | Retries (" + retries + ")");
                             }
                             else
                             {
@@ -76,8 +76,7 @@ namespace WarframeRssDataCollector.Data.Repositories
                     catch (Exception)
                     {
                         retries++;
-                        if (retries == 1) { Console.WriteLine("DB Entry failed for: " + alert.Title); }
-                        else { Console.WriteLine("\t Attempt #" + retries); }
+                        if (retries == 3) { Console.WriteLine("DB Entry failed for: " + alert.Title); }
                     }
                 }
                 while ((retries < 3) && (passed == false));
@@ -126,7 +125,7 @@ namespace WarframeRssDataCollector.Data.Repositories
                                 await command.ExecuteNonQueryAsync();
 
                                 passed = true;
-                                Console.WriteLine("DB Entry made: " + invasion.Title);
+                                Console.WriteLine("DB Entry made: " + invasion.Title + " | Retries (" + retries + ")");
                             }
                             else
                             {
@@ -140,8 +139,7 @@ namespace WarframeRssDataCollector.Data.Repositories
                     catch (Exception)
                     {
                         retries++;
-                        if (retries == 1) { Console.WriteLine("DB Entry failed for: " + invasion.Title); }
-                        else { Console.WriteLine("\t Attempt #" + retries); }
+                        if (retries == 3) { Console.WriteLine("DB Entry failed for: " + invasion.Title); }
                     }
                 }
                 while ((retries < 3) && (passed == false));
@@ -188,7 +186,7 @@ namespace WarframeRssDataCollector.Data.Repositories
                                 await command.ExecuteNonQueryAsync();
 
                                 passed = true;
-                                Console.WriteLine("DB Entry made: " + outbreak.Title);
+                                Console.WriteLine("DB Entry made: " + outbreak.Title + " | Retries (" + retries + ")");
                             }
                             else
                             {
@@ -202,17 +200,15 @@ namespace WarframeRssDataCollector.Data.Repositories
                     catch (Exception)
                     {
                         retries++;
-                        if (retries == 1) { Console.WriteLine("DB Entry failed for: " + outbreak.Title); }
-                        else { Console.WriteLine("\t Attempt #" + retries); }
+                        if (retries == 3) { Console.WriteLine("DB Entry failed for: " + outbreak.Title); }
                     }
                 }
                 while ((retries < 3) && (passed == false));
             }
         }
 
-        public void deleteFiles()
-        {
+        public void deleteFiles() { }
 
-        }
+        public void flush() { }
     }
 }

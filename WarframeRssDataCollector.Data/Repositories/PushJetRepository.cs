@@ -9,11 +9,11 @@ using WarframeRssDataCollector.Domain;
 
 namespace WarframeRssDataCollector.Data.Repositories
 {
-    public class PushJetCommands
+    public class PushJetRepository
     {
         public async void SendMessage(PushJetMessageContent messageData)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 try
                 {
@@ -31,12 +31,15 @@ namespace WarframeRssDataCollector.Data.Repositories
                     httpWebRequest.Method = "POST";
                     httpWebRequest.ContentType = "application/x-www-form-urlencoded";
                     httpWebRequest.ContentLength = data.Length;
-
-                    Stream newStream = httpWebRequest.GetRequestStream();
+                    
+                    Stream newStream = await httpWebRequest.GetRequestStreamAsync();
                     newStream.Write(data, 0, data.Length);
                     newStream.Close();
+
+                    WebResponse webResponse = await httpWebRequest.GetResponseAsync();
                 }
-                catch (Exception) { }
+                catch (Exception ex)
+                { }
             });            
         }
     }

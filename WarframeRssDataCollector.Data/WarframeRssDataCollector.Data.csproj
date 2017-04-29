@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DatabaseRepository.cs" />
     <Compile Include="Repositories\MockRepository.cs" />
+    <Compile Include="Repositories\MultiRepository.cs" />
     <Compile Include="Repositories\PushJetRepository.cs" />
     <Compile Include="Repositories\TextFileRepository.cs" />
     <Compile Include="Repositories\Interface\IBaseRepository.cs" />
