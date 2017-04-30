@@ -116,7 +116,15 @@ namespace WarframeRssDataCollector.Domain.Store.Warframe
             if(hour > 23)
             {
                 hour = hour - 24;
-                day += 1;
+                if (day < DateTime.DaysInMonth(year, month))
+                {
+                    day += 1;
+                }
+                else
+                {
+                    month++;
+                    day = 1;
+                }
             }
 
             return new DateTime(year, month, day, hour, min, sec);
