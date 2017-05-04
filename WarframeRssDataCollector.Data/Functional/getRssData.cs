@@ -15,6 +15,9 @@ namespace WarframeRssDataCollector.Data.Functional
 {
     public class getRssData
     {
+        private ResultBase<rss> OldRSSFeed = new ResultBase<rss>(new rss(), false, "");
+        private ResultBase<rss> CurrentRSSFeed = new ResultBase<rss>(new rss(), false, "");
+
         private async Task<ResultBase<rss>> DeserializeRSSFeedAsync()
         {
             return await Task.Run(() =>
@@ -37,19 +40,20 @@ namespace WarframeRssDataCollector.Data.Functional
                 {
                     Console.WriteLine("Error while getting WebResponse (This error is too generic)");
                     Console.WriteLine(ex);
-                    return new ResultBase<rss>(null, true, ex.ToString());
+                    return new ResultBase<rss>(OldRSSFeed.Result, true, ex.ToString());
                 }
             });
         }
 
         public List<WarframeItem> getData()
         {
-            ResultBase<rss> RSSFeed = DeserializeRSSFeedAsync().Result;
-            if (!RSSFeed.Success) return new List<WarframeItem>();
+            OldRSSFeed = CurrentRSSFeed;
+            CurrentRSSFeed = DeserializeRSSFeedAsync().Result;
+            if (!CurrentRSSFeed.Success) return new List<WarframeItem>();
 
             List<WarframeItem> data = new List<WarframeItem>();
 
-            foreach(rssChannelItem item in RSSFeed.Result.channel.item)
+            foreach(rssChannelItem item in CurrentRSSFeed.Result.channel.item)
             {
                 string Guid = "";
                 string Title = "";
