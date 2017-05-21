@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using WarframeRssDataCollector.Data.Repositories;
 using WarframeRssDataCollector.Domain;
 using WarframeRssDataCollector.Domain.Store.Result;
 using WarframeRssDataCollector.Domain.Store.Warframe;
@@ -38,7 +39,16 @@ namespace WarframeRssDataCollector.Data.Functional
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error while getting WebResponse (This error is too generic)");
+                    string message = "Error while getting WebResponse (This error is too generic)";
+                    PushJetRepository PushJetRepo = new PushJetRepository();
+                    PushJetRepo.SendMessage(new PushJetMessageContent()
+                    {
+                        secret = SecretData.PushJetSecret,
+                        title = SecretData.PushJetServiceName + "Error",
+                        level = 5,
+                        message = message
+                    });
+                    Console.WriteLine(message);
                     Console.WriteLine(ex);
                     return new ResultBase<rss>(OldRSSFeed.Result, true, ex.ToString());
                 }

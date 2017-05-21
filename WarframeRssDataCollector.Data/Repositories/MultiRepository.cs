@@ -34,7 +34,7 @@ namespace WarframeRssDataCollector.Data.Repositories
         {
             PushJetMsg = new PushJetMessageContent();
             PushJetMsg.secret = SecretData.PushJetSecret;
-            PushJetMsg.title = "Khaoz Warframe Data";
+            PushJetMsg.title = SecretData.PushJetServiceName;
             PushJetMsg.level = 3;
 
             msgContent = new StringBuilder();

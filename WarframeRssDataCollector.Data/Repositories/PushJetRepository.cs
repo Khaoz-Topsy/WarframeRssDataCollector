@@ -18,14 +18,18 @@ namespace WarframeRssDataCollector.Data.Repositories
                 try
                 {
                     var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.pushjet.io/message");
-
-                    //place body here
+                    
                     string stringData =
                         "secret=" + messageData.secret + "&" +
                         "message=" + messageData.message + "&" +
                         "title=" + messageData.title + "&" +
                         "level=" + messageData.level + "&" +
                         "link=" + messageData.link;
+
+                    //TODO try dis
+                    //string stringData = String.Format("secret={0}&message={1}&title={3}&level={4}&link={5}",
+                    //    messageData.secret, messageData.message, messageData.title, messageData.level, messageData.link);
+
                     var data = Encoding.ASCII.GetBytes(stringData);
 
                     httpWebRequest.Method = "POST";
