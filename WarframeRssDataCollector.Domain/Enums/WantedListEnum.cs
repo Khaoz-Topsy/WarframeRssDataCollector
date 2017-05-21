@@ -10,7 +10,7 @@ namespace WarframeRssDataCollector.Domain.Enums
     {
         orokin,
         //nitain,
-        egg,
+        kubrow,
         //vauban,
         kavat,
         synthula
