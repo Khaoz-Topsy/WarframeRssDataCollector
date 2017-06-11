@@ -8,11 +8,27 @@ namespace WarframeRssDataCollector.Domain.Enums
 {
     public enum WantedListEnum
     {
+        //orokin,
+        ////nitain,
+        //kubrow,
+        ////vauban,
+        //kavat,
+        //synthula
+
+        argon,
+		gallium,
+        kuva,
+        omega,
         orokin,
-        //nitain,
+        tellurium,
+
         kubrow,
-        //vauban,
         kavat,
-        synthula
+        synthula,
+
+        wraith,
+        sheev,
+        vandal,
+        exilus,
     }
 }

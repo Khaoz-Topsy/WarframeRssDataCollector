@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using WarframeRssDataCollector.Data.Functional;
 using WarframeRssDataCollector.Data.Repositories;
 using WarframeRssDataCollector.Data.Repositories.Interface;
@@ -18,6 +19,8 @@ namespace WarframeRssDataCollector
         private IBaseRepository storeRepo;
         private int refreshRate = 60000;
 
+        private static System.Timers.Timer myTimer;
+
         public void start(IBaseRepository ninjectRepo)
         {
             storeRepo = ninjectRepo;
@@ -25,10 +28,14 @@ namespace WarframeRssDataCollector
             //Only for the textFileRepo
             storeRepo.deleteFiles();
 
+            refresh();
+                                            //min sec milli
+            myTimer = new System.Timers.Timer(1 * 60 * 1000);
+            myTimer.Elapsed += timerTick;
+            myTimer.Start();
+
             while (true)
             {
-                refresh();
-                System.Threading.Thread.Sleep(refreshRate);
             }
         }
 
@@ -74,5 +81,9 @@ namespace WarframeRssDataCollector
             storeRepo.flush();
         }
 
+        private void timerTick(object src, ElapsedEventArgs e)
+        {
+            refresh();
+        }
     }
 }

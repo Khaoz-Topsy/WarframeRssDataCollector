@@ -39,12 +39,12 @@ namespace WarframeRssDataCollector.Data.Functional
                 }
                 catch (Exception ex)
                 {
-                    string message = "Error while getting WebResponse (This error is too generic)";
+                    string message = "Error while getting WebResponse";
                     PushJetRepository PushJetRepo = new PushJetRepository();
                     PushJetRepo.SendMessage(new PushJetMessageContent()
                     {
-                        secret = SecretData.PushJetSecret,
-                        title = SecretData.PushJetServiceName + "Error",
+                        secret = SecretData.PushJetHomeSecret,
+                        title = SecretData.PushJetHomeServiceName,
                         level = 5,
                         message = message
                     });
