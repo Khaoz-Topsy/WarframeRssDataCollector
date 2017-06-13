@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using WarframeRssDataCollector.Data.Functional;
@@ -20,6 +21,7 @@ namespace WarframeRssDataCollector
         private int refreshRate = 60000;
 
         private static System.Timers.Timer myTimer;
+        static ManualResetEvent _quitEvent = new ManualResetEvent(false);
 
         public void start(IBaseRepository ninjectRepo)
         {
@@ -34,9 +36,14 @@ namespace WarframeRssDataCollector
             myTimer.Elapsed += timerTick;
             myTimer.Start();
 
-            while (true)
-            {
-            }
+            //https://stackoverflow.com/questions/2586612/how-to-keep-a-net-console-app-running?noredirect=1&lq=1
+            Console.CancelKeyPress += myHandler;
+            _quitEvent.WaitOne();
+        }
+
+        void myHandler(object sender, ConsoleCancelEventArgs args)
+        {
+            myTimer.Stop();
         }
 
         private void refresh()
@@ -50,6 +57,7 @@ namespace WarframeRssDataCollector
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("Warframe Data Collector Initialized");
             }
 
