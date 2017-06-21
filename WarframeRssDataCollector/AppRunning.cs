@@ -18,8 +18,9 @@ namespace WarframeRssDataCollector
         private List<WarframeItem> Current = new List<WarframeItem>();
         private List<WarframeItem> Old = new List<WarframeItem>();
         private IBaseRepository storeRepo;
-        private int refreshRate = 60000;
+        private int refreshRate = 1 * 60 * 100;
 
+        private bool initialized;
         private static System.Timers.Timer myTimer;
         static ManualResetEvent _quitEvent = new ManualResetEvent(false);
 
@@ -31,8 +32,8 @@ namespace WarframeRssDataCollector
             storeRepo.deleteFiles();
 
             refresh();
-                                            //min sec milli
-            myTimer = new System.Timers.Timer(1 * 60 * 1000);
+            
+            myTimer = new System.Timers.Timer(refreshRate);
             myTimer.Elapsed += timerTick;
             myTimer.Start();
 
@@ -57,13 +58,13 @@ namespace WarframeRssDataCollector
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine("Warframe Data Collector Initialized");
+                if(!initialized)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Warframe Data Collector Initialized");
+                    initialized = true;
+                }
             }
-
-            //Console.WriteLine("Warframe Data Collector ready for DEV Initialization");
-            //var test = Console.ReadLine();
-            //commitDifferences(rssData.compare(Current, Old));
         }
 
         private void commitDifferences(List<WarframeItem> Difference)
@@ -91,6 +92,7 @@ namespace WarframeRssDataCollector
 
         private void timerTick(object src, ElapsedEventArgs e)
         {
+            Console.WriteLine("Refresh " + DateTime.Now.ToString("HH:mm:ss"));
             refresh();
         }
     }

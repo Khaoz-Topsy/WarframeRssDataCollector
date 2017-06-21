@@ -37,20 +37,29 @@ namespace WarframeRssDataCollector.Data.Functional
 
                     return new ResultBase<rss>(result, true, null);
                 }
+                catch (InvalidCastException ex)
+                {
+                    return writeMsg("Error while getting WebResponse, InvalidOperationException??", ex.ToString(), false);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return writeMsg("InvalidCastException. Means ISP is down and sending a login page, which is technically a http 200", ex.ToString(), false);
+                }
+                catch (NotImplementedException ex)
+                {
+                    return writeMsg("Error while getting WebResponse, NotImplementedException??", ex.ToString(), true);
+                }
+                catch (ArgumentNullException ex)
+                {
+                    return writeMsg("Error while getting WebResponse, ArgumentNullException??", ex.ToString(), true);
+                }
+                catch (ArgumentException ex)
+                {
+                    return writeMsg("Error while getting WebResponse, ArgumentException??", ex.ToString(), true);
+                }
                 catch (Exception ex)
                 {
-                    string message = "Error while getting WebResponse";
-                    PushJetRepository PushJetRepo = new PushJetRepository();
-                    PushJetRepo.SendMessage(new PushJetMessageContent()
-                    {
-                        secret = SecretData.PushJetHomeSecret,
-                        title = SecretData.PushJetHomeServiceName,
-                        level = 5,
-                        message = message
-                    });
-                    Console.WriteLine(message);
-                    Console.WriteLine(ex);
-                    return new ResultBase<rss>(OldRSSFeed.Result, true, ex.ToString());
+                    return writeMsg("Error while getting WebResponse, generel exception", ex.ToString(), true);
                 }
             });
         }
@@ -59,10 +68,12 @@ namespace WarframeRssDataCollector.Data.Functional
         {
             OldRSSFeed = CurrentRSSFeed;
             CurrentRSSFeed = DeserializeRSSFeedAsync().Result;
-            if (!CurrentRSSFeed.Success) return new List<WarframeItem>();
-
             List<WarframeItem> data = new List<WarframeItem>();
 
+            if (!CurrentRSSFeed.Success) return data;
+            if (CurrentRSSFeed.Result.channel == null) { return data; }
+
+            #region ForeachItem
             foreach(rssChannelItem item in CurrentRSSFeed.Result.channel.item)
             {
                 string Guid = "";
@@ -130,8 +141,7 @@ namespace WarframeRssDataCollector.Data.Functional
                     });
                 }
             }
-            
-            Console.WriteLine("Refresh " + DateTime.Now.ToString("HH:mm:ss"));
+            #endregion
 
             return data;
         }
@@ -159,9 +169,6 @@ namespace WarframeRssDataCollector.Data.Functional
                         Console.WriteLine("Item Found " + currentItem.ToString());
                     }
                 }
-
-                //if(diff.Count() > 0)
-                //    Console.WriteLine("Items Found " + diff.Count());
             }
             else  //TODO get rid of this \/\/\/
             {
@@ -169,6 +176,28 @@ namespace WarframeRssDataCollector.Data.Functional
             }
             
             return diff;
+        }
+
+        private ResultBase<rss> writeMsg(string message, string ex, bool sendViaPush = false)
+        {
+            if (sendViaPush) { sendPushJet(message); }
+
+            Console.WriteLine(message);
+            //Console.WriteLine(ex);
+
+            return new ResultBase<rss>(OldRSSFeed.Result, true, ex.ToString());
+        }
+
+        private async void sendPushJet(string message)
+        {
+            PushJetRepository PushJetRepo = new PushJetRepository();
+            PushJetRepo.SendMessage(new PushJetMessageContent()
+            {
+                secret = SecretData.PushJetHomeSecret,
+                title = SecretData.PushJetHomeServiceName,
+                level = 5,
+                message = message
+            });
         }
     }
 }
