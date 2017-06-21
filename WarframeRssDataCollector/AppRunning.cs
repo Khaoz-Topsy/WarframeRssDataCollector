@@ -18,7 +18,7 @@ namespace WarframeRssDataCollector
         private List<WarframeItem> Current = new List<WarframeItem>();
         private List<WarframeItem> Old = new List<WarframeItem>();
         private IBaseRepository storeRepo;
-        private int refreshRate = 1 * 60 * 100;
+        private int refreshRate = 1 * 60 * 1000;
 
         private bool initialized;
         private static System.Timers.Timer myTimer;
